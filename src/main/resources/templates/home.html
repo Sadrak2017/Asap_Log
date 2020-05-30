@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="sv"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <!-- Theme Made By www.w3schools.com - No Copyright -->
+  <title>Bootstrap Theme The Band</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+  .container {
+    padding: 80px 120px;
+  }
+  .person {
+    border: 10px solid transparent;
+    margin-bottom: 25px;
+    width: 80%;
+    height: 80%;
+    opacity: 0.7;
+  }
+  .person:hover {
+    border-color: #f1f1f1;
+  }
+  @media (max-width: 600px) {
+    .carousel-caption {
+      display: none; /* Hide the carousel text when the screen is less than 600 pixels wide */
+    }
+  }
+  .bg-1 {
+    background: #2d2d30;
+    color: #bdbdbd;
+  }
+  .bg-1 h3 {color: #fff;}
+  .bg-1 p {font-style: italic;}
+  .list-group-item:first-child {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+  }
+  .list-group-item:last-child {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  .thumbnail {
+    padding:0 0 15px 0;
+    border: none;
+    border-radius: 0;
+  }
+  .thumbnail p {
+    margin-top: 15px;
+    color: #555;
+  }
+  .btn {
+    padding: 10px 20px;
+    background-color: #333;
+    color: #f1f1f1;
+    border-radius: 0;
+    transition: .2s;
+  }
+  .btn:hover, .btn:focus {
+    border: 1px solid #333;
+    background-color: #fff;
+    color: #000;
+  }
+  .nav-tabs li a {
+    color: #777;
+  }
+  </style>
+</head>
+<body>
+
+
+
+<!-- Container (TOUR Section) -->
+<div class="bg-1">
+  <div class="container">
+    <h3 class="text-center">Apolice Two</h3>
+    <p class="text-center">Faça parte da proteção veicular que mais cresce no Brasil. <br>Cada vez mais próxima de você!</p>
+ 
+    <div class="row text-center">
+      <div class="col-sm-6">
+        <div class="thumbnail">
+          <img src="https://dgq0rlkor3ukz.cloudfront.net/wp-content/uploads/2019/06/seguro-auto-80.jpg" alt="Paris" width="400" height="300">
+          <p><strong>Faça parte!</strong></p>
+          <p>Serviços adequados garantindo proteção completa </p>
+          <a class="btn" th:href="${(#mvc.url('CC#WebCliente')).build()}">Cliente</a>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="thumbnail">
+          <img src="https://s2.glbimg.com/iW3qscqjrHgRb6cq03dLpBGSDXg=/e.glbimg.com/og/ed/f/original/2019/11/26/corolla_sedan_1.8l_grey_2019_038.jpg" alt="New York" width="400" height="300">
+          <p><strong>Sem burocracia!</strong></p>
+          <p>Um novo jeito de proteger seu carro. Fácil, barato e seguro.</p>
+          <a class="btn" th:href="${(#mvc.url('AC#WebApolice')).build()}">Apólice</a>     
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+</body>
+</html>
