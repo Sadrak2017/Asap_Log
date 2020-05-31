@@ -76,30 +76,30 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">×</button>
-          <h4><span class="glyphicon glyphicon-lock"></span> Cadastro de apólice</h4>
+          <h4><span class="glyphicon glyphicon-book"></span> Cadastro de apólice</h4>
         </div>
         <div class="modal-body">
           <form role="form"  method="post" th:object="${apolice}" th:action="@{/apolices/salvar}">
            <div class="form-group">
-              <label for="idCliente"><span class="glyphicon glyphicon-shopping-cart"></span> Cliente</label>
+              <label for="idCliente"><span class="glyphicon glyphicon-user"></span> Cliente</label>
             <select class="form-control" name="idCliente"  id="selectClient"  >
 			  <option >Selecione o cliente</option>
 			</select>
             </div>
             <div class="form-group">
-              <label for="vlrApolice"><span class="glyphicon glyphicon-shopping-cart"></span> Valor do contrato</label>
+              <label for="vlrApolice"><span class="glyphicon glyphicon-usd"></span> Valor do contrato</label>
               <input class="form-control valor" id="vlrApolice" th:field="${apolice.vlrApolice}" required>
             </div>
             <div class="form-group">
-              <label for="dtInicio"><span class="glyphicon glyphicon-user"></span> Início de vigência</label>
+              <label for="dtInicio"><span class="glyphicon glyphicon-export"></span> Início de vigência</label>
               <input type="date"min="2020-05-30" class="form-control" id="dtInicio" placeholder="" th:field="${apolice.dtInicio}" required>
             </div>
            <div class="form-group">
-              <label for="dtFim"><span class="glyphicon glyphicon-user"></span> Fim da vigência</label>
+              <label for="dtFim"><span class="glyphicon glyphicon-import"></span> Fim da vigência</label>
               <input type="date" min="2021-01-01"  class="form-control" id="dtFim" placeholder="" th:field="${apolice.dtFim}" required >
             </div>
            <div class="form-group">
-              <label for="placaVc"><span class="glyphicon glyphicon-user"></span> Placa do veículo</label>
+              <label for="placaVc"><span class="glyphicon glyphicon-road"></span> Placa do veículo</label>
               <input text class="form-control" id="placaVc"  th:field="${apolice.placa}" required>
             </div>
               <input type="hidden" class="form-check-input" id="inativo" name="inativo" value="1" th:field="${apolice.inativo}" >
@@ -124,38 +124,38 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">×</button>
-          <h4><span class="glyphicon glyphicon-lock"></span> Reencindir/Editar Apólice</h4>
+          <h4><span class="glyphicon glyphicon-folder-open"></span> Reencindir/Editar Apólice</h4>
         </div>
         <div class="modal-body">
           <form role="form" method="post" id="formUpdateDelete" th:object="${apolice}" th:action="@{/apolices/editar}">
             <div class="form-group">
-              <label for="name"><span class="glyphicon glyphicon-shopping-cart"></span>Contrato</label>
+              <label for="name"><span class="glyphicon glyphicon-qrcode"></span>Contrato</label>
 	            <select class="form-control" name="id"  id="contratos"  >
 				  <option > Nr° XX -  inativo </option>
 				</select>
             </div>
 	        <div class="form-group">
-              <label for="name"><span class="glyphicon glyphicon-shopping-cart"></span> Nome do cliente</label>
+              <label for="name"><span class="glyphicon glyphicon-user"></span> Nome do cliente</label>
               <input type="text" class="form-control" id="_name" name="name" placeholder="Seu nome Completo" required>
             </div>
             <div class="form-group">
-              <label for="city"><span class="glyphicon glyphicon-user"></span> Valor do Contrato</label>
+              <label for="city"><span class="glyphicon glyphicon-usd"></span> Valor do Contrato</label>
               <input type="text" class="form-control valor" id="_vlrApolice" vlrApolice="city" th:field="${apolice.vlrApolice}" required>
             </div>
 			<div class="form-group">
-              <label for="dtInicio"><span class="glyphicon glyphicon-shopping-cart"></span>Início de vigência do contrato</label>
+              <label for="dtInicio"><span class="glyphicon glyphicon-import"></span>Início de vigência do contrato</label>
               <input type="date" class="form-control" id="_dtIncio" name="dtInicio" placeholder="Seu nome Completo" th:field="${apolice.dtInicio}" required>
             </div>
            	<div class="form-group">
-              <label for="dtFim"><span class="glyphicon glyphicon-shopping-cart"></span>Fim de vigência do contrato</label>
+              <label for="dtFim"><span class="glyphicon glyphicon-export"></span>Fim de vigência do contrato</label>
               <input type="date" class="form-control" id="_dtFim" name="dtFim" placeholder="Seu nome Completo" th:field="${apolice.dtFim}"  required>
             </div>
             <div class="form-group">
-              <label for="placavc"><span class="glyphicon glyphicon-user"></span> Placa do veículo</label>
+              <label for="placavc"><span class="glyphicon glyphicon-road"></span> Placa do veículo</label>
               <input type="text" class="form-control" id="_placa" name="placa"  th:field="${apolice.placa}" required>
             </div>
             <div class="form-group">
-              <label for="status"><span class="glyphicon glyphicon-user" ></span> Status da apólice</label>
+              <label for="status"><span class="glyphicon glyphicon-bullhorn" ></span> Status da apólice</label>
               <input type="text" class="form-control" id="_status" name="status" disabled>
             </div>
            <div class="alert alert-warning" role="alert" id="alertRecisao">
@@ -163,13 +163,13 @@
 			</div>
             <input type="hidden" class="form-control" id="_contrato" name="operacao"  th:field="${apolice.operacao}" >
             <button class="btn btn-block" id="reativa">Reetivar contrato 
-                <span class="glyphicon glyphicon-ok"></span> 
+                <span class="glyphicon glyphicon-flash"></span> 
               </button>
               <button class="btn btn-block" id="update" >Editar Contrato 
-                <span class="glyphicon glyphicon-ok"></span>
+                <span class="glyphicon glyphicon-pencil"></span>
               </button>             	
               <button class="btn btn-block" id="delete" >Reencindir Contrato 
-                <span class="glyphicon glyphicon-ok"></span> 
+                <span class="glyphicon glyphicon-floppy-remove"></span> 
               </button>
               <div class="form-check form-check-inline" id="CheckRecisao">
 				  <input type="checkbox" class="form-check-input" id="_inativoCheck" >
@@ -194,12 +194,12 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">×</button>
-          <h4><span class="glyphicon glyphicon-lock"></span> Consultar Apólice</h4>
+          <h4><span class="glyphicon glyphicon-search"></span> Consultar Apólice</h4>
         </div>
         <div class="modal-body">
           <form role="form" method="POST" id="formSeacrh" th:object="${apolice}" th:action="@{/apolices/consulta}">
         <div class="form-group">
-            <label for="idCliente"><span class="glyphicon glyphicon-shopping-cart"></span> Cliente</label>
+            <label for="idCliente"><span class="glyphicon glyphicon-user"></span> Cliente</label>
           <select class="form-control" name="idCliente"  id="_selectClient"  >
 			  <option >Selecione o cliente</option>
 			</select>
@@ -207,12 +207,12 @@
 		  <button id="contratosSearch" class="btn btn-primary">Buscar</button>
 		</form>
 		<br>
-	    <label id="lbContratos"> Contratos encontrados</label>
+	    <label id="lbContratos"><span class="glyphicon glyphicon-folder-open"></span>  Contratos encontrados</label>
 	     <select class="form-control" name="id"  id="_contratos"  >
-		  <option > Nr° XX -  ATIVO </option>
+		  <option > Nr° XX -  STATUS </option>
 		</select>
         <br>
-		<div class="row"> 
+		 <div class="row"> 
 			<h1 style="color:green" class="nrContrato"></h1> 
 			<div class="card"> 
 			<ul class="list-group list-group-flush"> 
@@ -221,7 +221,7 @@
 		  </div> 
 		</div> 
         <div class="modal-footer">
-          <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal">
+          <button class="btn btn-danger btn-default pull-left" data-dismiss="modal">
             <span class="glyphicon glyphicon-remove"></span> Fechar
           </button>
           <p>__ <a href="">help?</a></p>

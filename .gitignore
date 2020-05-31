@@ -1,11 +1,13 @@
 HELP.md
 target/
+bin/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
 ### NODE ###
 node_modules/
 
+.bin
 ### STS ###
 .apt_generated
 .classpath

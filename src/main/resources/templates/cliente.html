@@ -52,7 +52,7 @@
           <img src="https://s2.glbimg.com/iW3qscqjrHgRb6cq03dLpBGSDXg=/e.glbimg.com/og/ed/f/original/2019/11/26/corolla_sedan_1.8l_grey_2019_038.jpg" alt="New York" width="400" height="300">
           <p><strong>Sem burocracia!</strong></p>
           <p>Um novo jeito de proteger seu carro. Fácil, barato e seguro.</p>
-          <button class="btn" id="deleteClient" data-toggle="modal" data-target="#myModalDeleteClient">Exluir Cliente</button>     
+          <button class="btn" id="deleteClient" data-toggle="modal" data-target="#myModalDeleteClient">Exluir/Editar Cliente</button>     
         </div>
       </div>
       <div class="col-sm-4">
@@ -74,24 +74,24 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">×</button>
-          <h4><span class="glyphicon glyphicon-lock"></span> Cadastrar cliente</h4>
+          <h4><span class="glyphicon glyphicon-book"></span> Cadastrar cliente</h4>
         </div>
         <div class="modal-body">
           <form role="form" method="post" modelAttribute="clientes" th:action="@{/clientes/salvar}">
             <div class="form-group">
-              <label for="name"><span class="glyphicon glyphicon-shopping-cart"></span> Nome Completo</label>
+              <label for="name"><span class="glyphicon glyphicon-pencil"></span> Nome Completo</label>
               <input type="text" class="form-control" id="name" name="name" placeholder="Seu nome Completo" th:field="${clientes.name}" required>
             </div>
             <div class="form-group">
-              <label for="cpf"><span class="glyphicon glyphicon-user"></span> CPF</label>
+              <label for="cpf"><span class="glyphicon glyphicon-barcode"></span> CPF</label>
               <input type="text" class="form-control" id="cpf" name="cpf" th:field="${clientes.cpf}" required>
             </div>
            <div class="form-group">
-              <label for="city"><span class="glyphicon glyphicon-user"></span> Cidade</label>
+              <label for="city"><span class="glyphicon glyphicon-globe"></span> Cidade</label>
               <input type="text" class="form-control" id="city" name="city" placeholder="Cidade" th:field="${clientes.city}" required>
             </div>
            <div class="form-gufroup">
-              <label for="usrname"><span class="glyphicon glyphicon-user"></span> UF</label>
+              <label for="usrname"><span class="glyphicon glyphicon-plane"></span> UF</label>
               <input type="text" class="form-control" id="uf" name="uf" placeholder="estado" th:field="${clientes.uf}" required>
             </div>
               <button type="submit" class="btn btn-block" >Confirmar 
@@ -115,46 +115,49 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">×</button>
-          <h4><span class="glyphicon glyphicon-lock"></span> Excluir/Editar cliente</h4>
+          <h4><span class="glyphicon glyphicon-remove"></span> Excluir/Editar cliente</h4>
         </div>
         <div class="modal-body">
+          <div class="alert alert-warning" role="alert" id="alertRecisao">
+			 Atenção! Não é possível deletar um cliente com contratos ativos! Para deletar, primeiro faça a recisão de todos contratos ativos!
+			</div>
           <form role="form" method="post" id="updateDelete" modelAttribute="clientes" th:action="@{/clientes/excluir}">
             <div class="form-group">
-              <label for="name"><span class="glyphicon glyphicon-shopping-cart"></span> Cliente</label>
+              <label for="name"><span class="glyphicon glyphicon-user"></span> Cliente</label>
             </div>
 	         <select class="form-control" name="id"  id="selectClient"  >
 			  <option >Selecione o cliente</option>
 			</select>
 			<div class="form-group">
-              <label for="name"><span class="glyphicon glyphicon-shopping-cart"></span> Nome Completo</label>
+              <label for="name"><span class="glyphicon glyphicon-pencil"></span> Nome Completo</label>
               <input type="text" class="form-control" id="_name" name="name" placeholder="Seu nome Completo" th:field="${clientes.name}" value="" required>
             </div>
             <div class="form-group">
-              <label for="cpf"><span class="glyphicon glyphicon-user"></span> CPF</label>
+              <label for="cpf"><span class="glyphicon glyphicon-barcode"></span> CPF</label>
               <input type="text" class="form-control" id="_cpf" name="ecpf" th:field="${clientes.cpf}" value="" required>
             </div>
            <div class="form-group">
-              <label for="city"><span class="glyphicon glyphicon-user"></span> Cidade</label>
+              <label for="city"><span class="glyphicon glyphicon-globe"></span> Cidade</label>
               <input type="text" class="form-control" id="_city" name="city" placeholder="Cidade" th:field="${clientes.city}" value="" required>
             </div>
            <div class="form-gufroup">
-              <label for="usrname"><span class="glyphicon glyphicon-user"></span> UF</label>
+              <label for="usrname"><span class="glyphicon glyphicon-plane"></span> UF</label>
               <input type="text" class="form-control" id="_uf" name="uf" placeholder="estado" th:field="${clientes.uf}" value="" required>
             </div>
             <div class="form-gufroup">
-            <label for="contrato"><span class="glyphicon glyphicon-user"></span> Contratos Ativos</label>
+            <label for="contrato" id="lbContratos"><span class="glyphicon glyphicon-th-list"></span> Contratos Ativos</label>
             <select class="form-control" name="contrato"  id="contrato"  >
 			  <option >N°: __  Válido até: ___ Veículo: ___</option>
 			</select>
             </div>
             <input type="hidden" class="form-control" id="_contrato" name="operacao"  th:field="${clientes.operacao}" value="" >
               <button class="btn btn-block" id="update" >Editar 
-                <span class="glyphicon glyphicon-ok"></span>
+                <span class="glyphicon glyphicon-pencil"></span>
               </button>
               	
-              <button class="btn btn-block" id="delete"  >Excluir 
-                <span class="glyphicon glyphicon-ok"></span> 
-              </button>
+              <div class="btn btn-block" id="delete"  >Excluir 
+                <span class="glyphicon glyphicon-trash"></span> 
+              </div>
           </form>
         </div>
         <div class="modal-footer">
@@ -174,37 +177,32 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">×</button>
-          <h4><span class="glyphicon glyphicon-lock"></span> Pesquisar cliente</h4>
+          <h4><span class="glyphicon glyphicon-search"></span> Pesquisar cliente</h4>
         </div>
         <div class="modal-body">
-          <form role="form" method="post" id="formSearch" modelAttribute="clientes" th:action="@{/clientes/like/}" >
+          <form role="form" method="post" id="formSearch" modelAttribute="clientes" th:action="@{/clientes/ilike/}" >
               <div class="form-group row">
 			      <div class="form-group mx-sm-3 mb-2">
-				    <input type="text" class="form-control" id="inputSearch" name="name"  th:field="${clientes.name}" placeholder="Digite o nome do cliente">
-				  <button  type="submit" id="findCliente" class="btn btn-primary mb-2 ">Pesquisar Dados</button> 
+				    <input type="text" class="form-control" id="inputSearch" name="name" placeholder="Digite o nome ou partes do nome do cliente" required>
+				  <button type="submit" id="findCliente" class="btn btn-primary mb-2 ">Pesquisar Dados
+				   </button> 
 				  </div>
 			  </div>
 		  </form>
-			<div class="form-group">
-              <label for="name"><span class="glyphicon glyphicon-shopping-cart"></span> Nome Completo</label>
-              <input type="text" class="form-control" id="_rname" name="name" placeholder="Seu nome Completo" min="2" th:field="${clientes.name}" value="">
-            </div>
-            <div class="form-group">
-              <label for="cpf"><span class="glyphicon glyphicon-user"></span> CPF</label>
-              <input type="text" class="form-control" id="_rcpf" name="ecpf" placeholder="xxx.xxx.xxx-xx"  th:field="${clientes.cpf}" value="">
-            </div>
-           <div class="form-group">
-              <label for="city"><span class="glyphicon glyphicon-user"></span> Cidade</label>
-              <input type="text" class="form-control" id="_rcity" name="city" placeholder="Cidade" th:field="${clientes.city}" value="">
-            </div>
-           <div class="form-gufroup">
-              <label for="usrname"><span class="glyphicon glyphicon-user"></span> UF</label>
-              <input type="text" class="form-control" id="_rUuf" name="uf" placeholder="estado" th:field="${clientes.uf}" value="">
-            </div>
-            <div class="form-gufroup">
-              <label for="usrname"><span class="glyphicon glyphicon-user"></span> Nº Contrato</label>
-              <input type="text" class="form-control" id="_rcontrato" name="contrato" placeholder="estado" th:field="${clientes.uf}" value="">
-            </div>
+   		<br>
+      <div class="form-group">
+        <label for="name"><span class="glyphicon glyphicon-user"></span> Clientes encontrados</label>
+         </div>
+       <select class="form-control" name="id"  id="_rSelectClient"  >
+	     <option >Selecione o cliente</option>
+		</select>
+		 <div class="row"> 
+			<h1 style="color:green" class="daDodosCliente"></h1> 
+			<div class="card"> 
+			<ul class="list-group list-group-flush"> 
+		       <textarea class="form-control" id="resultado" rows="5" disabled></textarea>
+			</ul>   
+		  </div> 
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal">
