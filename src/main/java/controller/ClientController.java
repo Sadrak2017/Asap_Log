@@ -58,18 +58,17 @@ public class ClientController {
         return "redirect:/clientes/painel";
     }
 
-    @RequestMapping("/excluir")
-    public String delete(@RequestParam String id, @RequestParam String name, @RequestParam String city, 
-    		@RequestParam String uf, @RequestParam String operacao, @RequestParam String cpf) {
-        String uri;
-    	if(operacao.equals("EXCLUIR")) {
-    	  Optional<Clientes> cliente = clientesRepository.findById(id);
-          clientesRepository.delete(cliente.get());
-          uri = "redirect:/clientes/painel";
-        }else {
-          uri = update(id, name, city, uf, cpf);
-        }
-    	return uri;
+    @RequestMapping("/excluir/{id}")
+    @ResponseBody
+    public Response delete(@PathVariable String id) {
+    	  Clientes cliente = clientesRepository.findById(id).get();
+        List<Apolice> contratosApolices = apoliceRepository.findContrato(cliente.getId());
+        Response response = new Response("Done", cliente);
+    	  clientesRepository.delete(cliente); 
+    	  for (Apolice apolices : contratosApolices) { // Exclui todos contratos reencindidos associados ao cliente que foi excluido
+    	     apoliceRepository.delete(apolices);
+				}
+    	return response;
     }
 	
     @RequestMapping("/buscarTodos")
@@ -85,21 +84,20 @@ public class ClientController {
  	   Clientes cliente = clientesRepository.findById(id).get();
  	   List<Apolice> contrato = null;
  	   Response response = null;
-        if(cliente != null && !cliente.getId().isEmpty())
-          contrato = ApoliceController.getActiveApolice(apoliceRepository.findContrato(cliente.getId()));
-        if(contrato != null)
+       if(cliente != null && !cliente.getId().isEmpty())
+         contrato = ApoliceController.getActiveApolice(apoliceRepository.findContrato(cliente.getId()));
+       if(contrato != null)
      	   response = new Response("Done", cliente, contrato);
-        else
+       else
      	   response = new Response("Done", cliente);    
        return response;
     }
     
-    @RequestMapping("like/")
+    @RequestMapping("/ilike/{name}")
     @ResponseBody
     public Response selectIlike(@PathVariable String name) {	
-    	System.out.println(name);
-        Response response = new Response("Done", clientesRepository.findIlikeName(name));
-        return response;
+      Response response = new Response("Done", clientesRepository.findIlikeName(name));
+      return response;
     }  
 
 }
