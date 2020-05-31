@@ -1,7 +1,8 @@
 package controller;
 
+import java.text.ParseException;
+import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
@@ -9,9 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import Interface.ApoliceRepository;
 import Interface.ClienteRepository;
 import message.Response;
+import model.Apolice;
 import model.Clientes;
 
 
@@ -21,6 +23,9 @@ public class ClientController {
 
 	@Autowired
 	private ClienteRepository clientesRepository;
+	
+	@Autowired
+	private ApoliceRepository apoliceRepository; 
     
     @RequestMapping("/painel")
     public String WebCliente(Model model){
@@ -41,7 +46,6 @@ public class ClientController {
         return "redirect:/clientes/painel";
     }
     
-
     @RequestMapping("/editar")
     public String update(@RequestParam String id, @RequestParam String name, @RequestParam String city, @RequestParam String uf,
     		@RequestParam String cpf){
@@ -53,7 +57,6 @@ public class ClientController {
         clientesRepository.save(cliente.get());
         return "redirect:/clientes/painel";
     }
-
 
     @RequestMapping("/excluir")
     public String delete(@RequestParam String id, @RequestParam String name, @RequestParam String city, 
@@ -78,11 +81,18 @@ public class ClientController {
     
     @RequestMapping("buscar/{id}")
     @ResponseBody
-    public Response selectOne(@PathVariable String id) {
-        Response response = new Response("Done", clientesRepository.findById(id).get());
-        return response;
+    public Response selectOne(@PathVariable String id) throws ParseException {
+ 	   Clientes cliente = clientesRepository.findById(id).get();
+ 	   List<Apolice> contrato = null;
+ 	   Response response = null;
+        if(cliente != null && !cliente.getId().isEmpty())
+          contrato = ApoliceController.getActiveApolice(apoliceRepository.findContrato(cliente.getId()));
+        if(contrato != null)
+     	   response = new Response("Done", cliente, contrato);
+        else
+     	   response = new Response("Done", cliente);    
+       return response;
     }
-    
     
     @RequestMapping("like/")
     @ResponseBody
@@ -90,9 +100,6 @@ public class ClientController {
     	System.out.println(name);
         Response response = new Response("Done", clientesRepository.findIlikeName(name));
         return response;
-    }
-    
-    
-    
+    }  
 
 }

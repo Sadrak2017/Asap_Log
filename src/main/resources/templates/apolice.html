@@ -5,8 +5,8 @@
   <title>Bootstrap Theme The Band</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="../css/custom.css">
 </head>
@@ -24,8 +24,9 @@
     </div>
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-        <li class="active"><a th:href="${(#mvc.url('WC#index')).build()}">Home</a></li>
+        <li><a th:href="${(#mvc.url('WC#index')).build()}">Home</a></li>
         <li><a th:href="${(#mvc.url('CC#WebCliente')).build()}">Clientes</a></li>
+         <li class="active"><a >Apólices</a></li>
         <li><a href="#">Contato</a></li>
       </ul>
     </div><!--/.nav-collapse -->
@@ -52,7 +53,7 @@
           <img src="https://s2.glbimg.com/iW3qscqjrHgRb6cq03dLpBGSDXg=/e.glbimg.com/og/ed/f/original/2019/11/26/corolla_sedan_1.8l_grey_2019_038.jpg" alt="New York" width="400" height="300">
           <p><strong>Sem burocracia!</strong></p>
           <p>Um novo jeito de proteger seu carro. Fácil, barato e seguro.</p>
-          <button class="btn" data-toggle="modal" data-target="#myModalDeleteUpdadeApolice" id="modalUpdateDelete">Pesquisar Apólice</button>     
+          <button class="btn" data-toggle="modal" data-target="#myModalDeleteUpdadeApolice" id="modalUpdateDelete">Reencidir/Editar Apólice</button>     
         </div>
       </div>
       <div class="col-sm-4">
@@ -60,7 +61,7 @@
           <img src="https://blog.nakata.com.br/wp-content/uploads/2018/02/170796-depreciacao-de-veiculos-e-possivel-manter-um-carro-sempre-como-novo.jpg" alt="San Francisco" width="400" height="300">
           <p><strong>Simples e prático</strong></p>
           <p>Seu carro já está seguro ! Tecnologia avançada para localização do veículo.</p>
-          <button class="btn" >Excluir Apolice</button>    
+          <button class="btn"  data-toggle="modal" data-target="#myModalSearchApolice" id="modalSearch">Consultar Apólice</button>    
         </div>
       </div>
     </div>
@@ -87,7 +88,7 @@
             </div>
             <div class="form-group">
               <label for="vlrApolice"><span class="glyphicon glyphicon-shopping-cart"></span> Valor do contrato</label>
-              <input class="form-control" id="vlrApolice" placeholder="" th:field="${apolice.vlrApolice}" required>
+              <input class="form-control valor" id="vlrApolice" th:field="${apolice.vlrApolice}" required>
             </div>
             <div class="form-group">
               <label for="dtInicio"><span class="glyphicon glyphicon-user"></span> Início de vigência</label>
@@ -99,8 +100,9 @@
             </div>
            <div class="form-group">
               <label for="placaVc"><span class="glyphicon glyphicon-user"></span> Placa do veículo</label>
-              <input text class="form-control" id="placaVc"  data-mask="000-0000" placeholder="3254-URF" th:field="${apolice.placa}" required>
+              <input text class="form-control" id="placaVc"  th:field="${apolice.placa}" required>
             </div>
+              <input type="hidden" class="form-check-input" id="inativo" name="inativo" value="1" th:field="${apolice.inativo}" >
               <button type="submit" class="btn btn-block">Confirmar 
                 <span class="glyphicon glyphicon-ok"></span>
               </button>
@@ -110,7 +112,7 @@
           <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal">
             <span class="glyphicon glyphicon-remove"></span> Cancelar
           </button>
-          <p>__ <a href="#">help?</a></p>
+          <p>__ <a href="">help?</a></p>
         </div>
       </div>
     </div>
@@ -122,13 +124,13 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">×</button>
-          <h4><span class="glyphicon glyphicon-lock"></span> Excluir/Editar Apólice</h4>
+          <h4><span class="glyphicon glyphicon-lock"></span> Reencindir/Editar Apólice</h4>
         </div>
         <div class="modal-body">
-          <form role="form" method="post" id="formUpdateDelete" th:object="${apolice}" th:action="@{/apolices/excluir}">
+          <form role="form" method="post" id="formUpdateDelete" th:object="${apolice}" th:action="@{/apolices/editar}">
             <div class="form-group">
               <label for="name"><span class="glyphicon glyphicon-shopping-cart"></span>Contrato</label>
-	            <select class="form-control" name="contratos"  id="contratos"  >
+	            <select class="form-control" name="id"  id="contratos"  >
 				  <option > Nr° XX -  inativo </option>
 				</select>
             </div>
@@ -138,7 +140,7 @@
             </div>
             <div class="form-group">
               <label for="city"><span class="glyphicon glyphicon-user"></span> Valor do Contrato</label>
-              <input type="text" class="form-control" id="_city" name="city" placeholder="Cidade" th:field="${apolice.vlrApolice}" required>
+              <input type="text" class="form-control valor" id="_vlrApolice" vlrApolice="city" th:field="${apolice.vlrApolice}" required>
             </div>
 			<div class="form-group">
               <label for="dtInicio"><span class="glyphicon glyphicon-shopping-cart"></span>Início de vigência do contrato</label>
@@ -146,38 +148,93 @@
             </div>
            	<div class="form-group">
               <label for="dtFim"><span class="glyphicon glyphicon-shopping-cart"></span>Fim de vigência do contrato</label>
-              <input type="text" class="form-control" id="_dtFim" name="dtFim" placeholder="Seu nome Completo" th:field="${apolice.dtFim}"  required>
+              <input type="date" class="form-control" id="_dtFim" name="dtFim" placeholder="Seu nome Completo" th:field="${apolice.dtFim}"  required>
             </div>
             <div class="form-group">
               <label for="placavc"><span class="glyphicon glyphicon-user"></span> Placa do veículo</label>
-              <input type="text" class="form-control" id="_placavc" name="placa"  th:field="${apolice.placa}" required>
+              <input type="text" class="form-control" id="_placa" name="placa"  th:field="${apolice.placa}" required>
             </div>
             <div class="form-group">
               <label for="status"><span class="glyphicon glyphicon-user"></span> Status da apólice</label>
               <input type="text" class="form-control" id="_status" name="status"  required>
             </div>
-    
+           <div class="alert alert-warning" role="alert" id="alertRecisao">
+			 Atenção! Se deseja reecindir o contrato marque o checkbox abaixo!
+			</div>
             <input type="hidden" class="form-control" id="_contrato" name="operacao"  th:field="${apolice.operacao}" >
-              <button class="btn btn-block" id="update" value="EDITAR">Editar Contrato 
-                <span class="glyphicon glyphicon-ok"></span>
-              </button>
-              	
-              <button class="btn btn-block" id="delete" value="EXCLUIR" >Reencindir Contrato 
+            <button class="btn btn-block" id="reativa">Reetivar contrato 
                 <span class="glyphicon glyphicon-ok"></span> 
               </button>
+              <button class="btn btn-block" id="update" >Editar Contrato 
+                <span class="glyphicon glyphicon-ok"></span>
+              </button>             	
+              <button class="btn btn-block" id="delete" >Reencindir Contrato 
+                <span class="glyphicon glyphicon-ok"></span> 
+              </button>
+              <div class="form-check form-check-inline" id="CheckRecisao">
+				  <input type="checkbox" class="form-check-input" id="_inativoCheck" >
+				  <input type="hidden" class="form-check-input" id="_inativo" name="inativo" value="1" th:field="${apolice.inativo}" >
+				  <label class="form-check-label alert-danger" for="materialInline1">Para confimar click no checkbox ao lado</label>
+			  </div>    
           </form>
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal">
             <span class="glyphicon glyphicon-remove"></span> Cancelar
           </button>
-          <p>__ <a href="#">help?</a></p>
+          <p>__ <a href="">help?</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal de exclusão/edição de apólices -->
+  <div class="modal fade" id="myModalSearchApolice" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">×</button>
+          <h4><span class="glyphicon glyphicon-lock"></span> Consultar Apólice</h4>
+        </div>
+        <div class="modal-body">
+          <form role="form" method="POST" id="formSeacrh" th:object="${apolice}" th:action="@{/apolices/consulta}">
+        <div class="form-group">
+            <label for="idCliente"><span class="glyphicon glyphicon-shopping-cart"></span> Cliente</label>
+          <select class="form-control" name="idCliente"  id="_selectClient"  >
+			  <option >Selecione o cliente</option>
+			</select>
+          </div>
+		  <button id="contratosSearch" class="btn btn-primary">Buscar</button>
+		</form>
+		<br>
+	    <label id="lbContratos"> Contratos encontrados</label>
+	     <select class="form-control" name="id"  id="_contratos"  >
+		  <option > Nr° XX -  ATIVO </option>
+		</select>
+        <br>
+		<div class="row"> 
+			<h1 style="color:green" class="nrContrato"></h1> 
+			<div class="card"> 
+			<ul class="list-group list-group-flush"> 
+		       <textarea class="form-control" id="resultado" rows="5"></textarea>
+			</ul>   
+		  </div> 
+		</div> 
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal">
+            <span class="glyphicon glyphicon-remove"></span> Fechar
+          </button>
+          <p>__ <a href="">help?</a></p>
         </div>
       </div>
     </div>
   </div> 
+   
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.10.0.min.js"></script>
+<script src="https://rawgit.com/RobinHerbots/Inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
+<script src="../js/mask.js"></script>
 <script src="../js/customApolice.js"></script>
 </body>
 </html>

@@ -12,7 +12,9 @@ public class Apolice{
 	private String id;
 	private String idCliente;
 	private String operacao;
+	private Boolean inativo;
 	private String nrApolice;
+	private String status;
 	private float vlrApolice;
 	private String dtInicio;
 	private String dtFim;
@@ -22,10 +24,23 @@ public class Apolice{
 	public Apolice() {
 	
 	}
-    public Apolice(String idCliente, String nrApolice, float vlrApolice, String dtInicio, String dtFim, String placa) {
+	
+    public Apolice(String idCliente, Boolean inativo, String nrApolice, float vlrApolice, String status, String dtInicio, String dtFim, String placa) {
+        this.idCliente = idCliente;
+        this.nrApolice = nrApolice;
+        this.inativo = inativo;
+        this.status = status;
+        this.vlrApolice = vlrApolice;
+        this.dtInicio = dtInicio;
+        this.dtFim = dtFim;
+        this.placa = placa;
+    }
+    
+    public Apolice(String idCliente, Boolean inativo, String nrApolice, float vlrApolice, String dtInicio, String dtFim, String placa) {
         this.idCliente = idCliente;
         this.nrApolice = nrApolice;
         this.vlrApolice = vlrApolice;
+        this.inativo = inativo;
         this.dtInicio = dtInicio;
         this.dtFim = dtFim;
         this.placa = placa;
@@ -51,6 +66,13 @@ public class Apolice{
     }
 
     
+	public Boolean getInativo() {
+		return inativo;
+	}
+	
+	public void setInativo(Boolean inativo) {
+		this.inativo = inativo;
+	}
 	
 	public Clientes getCliente() {
 		return cliente;
@@ -63,9 +85,19 @@ public class Apolice{
 	public String getOperacao() {
 		return operacao;
 	}
+	
 	public void setOperacao(String operacao) {
 		this.operacao = operacao;
 	}
+	
+	public String getStatus() {
+		return status;
+	}
+	
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
 	public String getId() {
 		return id;
 	}

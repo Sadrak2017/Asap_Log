@@ -1,9 +1,5 @@
 $( document ).ready(function() {
-  
-	$("#inputSearch").keyup(function() {
-		
-	});
-	
+ 	
 	$("#update").click(function(event){
 		$(this).val("EDITAR");
 	});
@@ -50,6 +46,21 @@ $( document ).ready(function() {
 		  $.getJSON(window.location + "/../buscar/"+ $(this).val(), {
 		    }, function(result) {
 		        setVal(result.data, "_");
+		        if(result.inner != "undefined") {
+		          $('#contrato').empty();
+		          $.each(result.inner, function(i, html){
+		        	html += '<option value="' + html.id + '" >'
+		        	   + 'Cód.: '+ html.nrApolice.toUpperCase()
+		        	   + ' - '
+		        	   + html.status
+		        	   + ' -  Veículo: '
+		        	   + html.placa.toUpperCase() 
+		        	   +'</option>';
+		            $('#contrato').append(html)
+		          });
+		        }else{
+		          $("#contrato").html("<option>Nenhuma apólice relacionado ao cliente!</option>");
+		        }
 		    }); 
 		}
 	);
@@ -63,16 +74,18 @@ $( document ).ready(function() {
 		}
 	);
 
+	$("#cpf, #_cpf").inputmask({
+		  mask: ['999.999.999-99'],
+		  keepStatic: true
+	});
 	
 })
 	
 	
-	function setVal(data, aux){
-	  $("#"+aux+"name").val(data.name).trigger('change');
-	  $("#"+aux+"city").val(data.city).trigger('change');
-	  $("#"+aux+"uf").val(data.uf).trigger('change');
-	  $("#"+aux+"cpf").val(data.cpf).trigger('change');
-	  $("#"+aux+"contrato").val("SEM CONTRATO ");
-	}
-	
-	
+function setVal(data, aux){
+  $("#"+aux+"name").val(data.name).trigger('change');
+  $("#"+aux+"city").val(data.city).trigger('change');
+  $("#"+aux+"uf").val(data.uf).trigger('change');
+  $("#"+aux+"cpf").val(data.cpf).trigger('change');
+  $("#"+aux+"contrato").val("SEM CONTRATO ");
+}
