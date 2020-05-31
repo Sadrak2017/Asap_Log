@@ -5,7 +5,7 @@ $( document ).ready(function() {
 	}
 	
 	$("#update").click(function(event){
-		$(this).val("EDITAR");
+		$("#_contrato").val("EDITAR");
 	});
 	
 	$("#delete").click(function(event){
@@ -13,13 +13,10 @@ $( document ).ready(function() {
 			closeAlert("block");
 		    event.preventDefault(); // cancela operação
 		}else{
-		   $(this).val("EXCLUIR");
-		   ajaxDelete();
+		   $("#_contrato").val("EXCLUIR");
 		   closeAlert("none");
 		}
 	});
-	
-	
 	
 	$("#deleteClient").click(function(event){
 	    event.preventDefault();
