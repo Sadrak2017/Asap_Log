@@ -132,7 +132,7 @@ $( document ).ready(function() {
 	    if(result.status == "Done"){
 	      $('#_contratos').empty();
 	      var status = "";
-	      $("#lbContratos").text("("+result.data.length +") Contratos encontratos");
+	      $("#lbContratos").text("("+result.data.length +") Contratos encontrados");
 	      $.each(result.data, function(i, html){
 	    	 if(html.inativo === true){
 	    	   status = "INATIVO";
