@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import Interface.ApoliceRepository;
 import Interface.ClienteRepository;
 import message.Response;
@@ -62,7 +64,6 @@ public class ApoliceController {
 	 @RequestMapping("/consulta/{idCliente}")
    @ResponseBody
    public Response selectWhere(@PathVariable String idCliente){
-	   Clientes cliente = null;
 	   List<Apolice> contratos =  apoliceRepository.findContrato(idCliente);
 	   for (Apolice apolice : contratos) {
 			apolice.setStatus(getStatus(apolice.getInativo(), apolice.getDtFim()));;
@@ -119,9 +120,9 @@ public class ApoliceController {
 			apolice.setStatus("Contrato INATIVO!");
 		  else
 		    apolice.setStatus("Faltam "+days+" dias p/ vencer!");
-		  if(!apolice.getInativo())
-			  apolice.setStatus("Contrato Reencindido!");  	  
-		} 	
+		  if(apolice.getInativo())
+			  apolice.setStatus("Contrato Reencindido!");
+		}
    	 return _rContratosApolices;
 	 }
    
