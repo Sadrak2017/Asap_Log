@@ -155,8 +155,8 @@
               <input type="text" class="form-control" id="_placa" name="placa"  th:field="${apolice.placa}" required>
             </div>
             <div class="form-group">
-              <label for="status"><span class="glyphicon glyphicon-user"></span> Status da apólice</label>
-              <input type="text" class="form-control" id="_status" name="status"  required>
+              <label for="status"><span class="glyphicon glyphicon-user" ></span> Status da apólice</label>
+              <input type="text" class="form-control" id="_status" name="status" disabled>
             </div>
            <div class="alert alert-warning" role="alert" id="alertRecisao">
 			 Atenção! Se deseja reecindir o contrato marque o checkbox abaixo!
@@ -216,7 +216,7 @@
 			<h1 style="color:green" class="nrContrato"></h1> 
 			<div class="card"> 
 			<ul class="list-group list-group-flush"> 
-		       <textarea class="form-control" id="resultado" rows="5"></textarea>
+		       <textarea class="form-control" id="resultado" rows="5" disabled></textarea>
 			</ul>   
 		  </div> 
 		</div> 
