@@ -2,8 +2,10 @@ package model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @XmlRootElement
@@ -13,7 +15,11 @@ public class Clientes {
 	  
 	@Id
 	private String id;
+	
+	@CPF(message = "CPF inválido")
+	@Indexed(unique = true)
 	private String cpf;
+	
 	private String name;
 	private String city;
 	private String uf;

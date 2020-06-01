@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org">
 <head>
   <!-- Theme Made By www.w3schools.com - No Copyright -->
   <title>Bootstrap Theme The Band</title>
@@ -36,9 +37,8 @@
 <div class="bg-1">
   <div class="container">
     <h3 class="text-center">Apolice Two</h3>
-    <p class="text-center">Faça parte da proteção veicular que mais cresce no Brasil. <br>Cada vez mais próxima de você!</p>
- 
-    <div class="row text-center">
+    <p class="text-center">Faça parte da proteção veicular que mais cresce no Brasil. <br>Cada vez mais próxima de você!</p> 
+     <div class="row text-center">
       <div class="col-sm-4">
         <div class="thumbnail">
           <img src="https://dgq0rlkor3ukz.cloudfront.net/wp-content/uploads/2019/06/seguro-auto-80.jpg" alt="Paris" width="400" height="300">
@@ -69,47 +69,58 @@
   <!-- Modais -->
   
   <!-- Modal de cadastro de cliente -->
-  <div class="modal fade" id="myModalAddClient" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">×</button>
-          <h4><span class="glyphicon glyphicon-book"></span> Cadastrar cliente</h4>
-        </div>
-        <div class="modal-body">
-          <form role="form" method="post" modelAttribute="clientes" th:action="@{/clientes/salvar}">
-            <div class="form-group">
-              <label for="name"><span class="glyphicon glyphicon-pencil"></span> Nome Completo</label>
-              <input type="text" class="form-control" id="name" name="name" placeholder="Seu nome Completo" th:field="${clientes.name}" required>
-            </div>
-            <div class="form-group">
-              <label for="cpf"><span class="glyphicon glyphicon-barcode"></span> CPF</label>
-              <input type="text" class="form-control" id="cpf" name="cpf" th:field="${clientes.cpf}" required>
-            </div>
-           <div class="form-group">
-              <label for="city"><span class="glyphicon glyphicon-globe"></span> Cidade</label>
-              <input type="text" class="form-control" id="city" name="city" placeholder="Cidade" th:field="${clientes.city}" required>
-            </div>
-           <div class="form-gufroup">
-              <label for="usrname"><span class="glyphicon glyphicon-plane"></span> UF</label>
-              <input type="text" class="form-control" id="uf" name="uf" placeholder="estado" th:field="${clientes.uf}" required>
-            </div>
+  <form role="form" method="POST"  th:object="${clientes}" th:action="@{/clientes/salvar}">
+	  <div class="modal" th:classappend="${#fields.hasErrors('cpf')} ? show : fade" id="myModalAddClient" role="dialog">
+	    <div class="modal-dialog">
+	      <div class="modal-content">
+	        <div class="modal-header">
+	          <a type="button" class="close" data-dismiss="modal">×</a>
+	          <h4><span class="glyphicon glyphicon-book"></span> Cadastrar cliente</h4>
+	        </div>
+	        <div class="modal-body">
+		        <div class="alert alert-success" th:text="${mensagem}" 
+					th:if="${not #strings.isEmpty(mensagem)}">
+				 </div>
+				 <div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
+				<div th:each="detailedError : ${#fields.detailedErrors()}">
+					<span th:text="${detailedError.message}"></span>
+				</div>
+				</div>
+	            <div class="form-group">
+	              <label for="name"><span class="glyphicon glyphicon-pencil"></span> Nome Completo</label>
+	              <input type="text" class="form-control" id="name" name="name" placeholder="Seu nome Completo" th:field="${clientes.name}" required>
+	            </div>
+	            <div class="form-group" th:classappend="${#fields.hasErrors('cpf')} ? has-error">
+	              <label for="cpf"><span class="glyphicon glyphicon-barcode"></span> CPF</label>
+	              <input type="text" class="form-control" id="cpf" name="cpf" th:field="*{cpf}" required>
+	            </div>
+	           <div class="form-group">
+	              <label for="city"><span class="glyphicon glyphicon-globe"></span> Cidade</label>
+	              <input type="text" class="form-control" id="city" name="city" placeholder="Cidade" th:field="${clientes.city}" required>
+	            </div>
+	           <div class="form-gufroup">
+	              <label for="usrname"><span class="glyphicon glyphicon-plane"></span> UF</label>
+	              <input type="text" class="form-control" id="uf" name="uf" placeholder="estado" th:field="${clientes.uf}" required>
+	            </div>
               <button type="submit" class="btn btn-block" >Confirmar 
                 <span class="glyphicon glyphicon-ok"></span>
               </button>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal">
-            <span class="glyphicon glyphicon-remove"></span> Cancelar
-          </button>
-          <p>__ <a href="#">help?</a></p>
-        </div>
-      </div>
-    </div>
-  </div>
-
+	        </div>
+	        <div class="modal-footer">
+	          <a class="btn btn-danger btn-default pull-left" th:href="${(#mvc.url('CC#WebCliente')).build()}">
+	            <span class="glyphicon glyphicon-remove"></span> Cancelar operação
+	          </a>
+	            <button type="reset"  class="btn btn-danger btn-default pull-left" data-dismiss="modal">
+	             <span class="glyphicon glyphicon-remove"></span> Fechar
+	            </button>
+	          <p>__ <a href="#">help?</a></p>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+    </form>
   <!-- Modal de exclusão/edição de cliente -->
+ <form role="form" method="post" id="updateDelete" modelAttribute="clientes" th:action="@{/clientes/excluir}">
   <div class="modal fade" id="myModalDeleteClient" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -121,7 +132,6 @@
           <div class="alert alert-warning" role="alert" id="alertRecisao">
 			 Atenção! Não é possível deletar um cliente com contratos ativos! Para deletar, primeiro faça a recisão de todos contratos ativos!
 			</div>
-          <form role="form" method="post" id="updateDelete" modelAttribute="clientes" th:action="@{/clientes/excluir}">
             <div class="form-group">
               <label for="name"><span class="glyphicon glyphicon-user"></span> Cliente</label>
             </div>
@@ -130,19 +140,19 @@
 			</select>
 			<div class="form-group">
               <label for="name"><span class="glyphicon glyphicon-pencil"></span> Nome Completo</label>
-              <input type="text" class="form-control" id="_name" name="name" placeholder="Seu nome Completo" th:field="${clientes.name}" value="" required>
+              <input type="text" class="form-control" id="_name" name="name" placeholder="Seu nome Completo" th:field="${clientes.name}" required>
             </div>
             <div class="form-group">
               <label for="cpf"><span class="glyphicon glyphicon-barcode"></span> CPF</label>
-              <input type="text" class="form-control" id="_cpf" name="cpf" th:field="${clientes.cpf}" value="" required>
+              <input type="text" class="form-control" id="_cpf" name="cpf" th:field="${clientes.cpf}" required disabled>
             </div>
            <div class="form-group">
               <label for="city"><span class="glyphicon glyphicon-globe"></span> Cidade</label>
-              <input type="text" class="form-control" id="_city" name="city" placeholder="Cidade" th:field="${clientes.city}" value="" required>
+              <input type="text" class="form-control" id="_city" name="city" placeholder="Cidade" th:field="${clientes.city}" required>
             </div>
            <div class="form-gufroup">
               <label for="usrname"><span class="glyphicon glyphicon-plane"></span> UF</label>
-              <input type="text" class="form-control" id="_uf" name="uf" placeholder="estado" th:field="${clientes.uf}" value="" required>
+              <input type="text" class="form-control" id="_uf" name="uf" placeholder="estado" th:field="${clientes.uf}"  required>
             </div>
             <div class="form-gufroup">
             <label for="contrato" id="lbContratos"><span class="glyphicon glyphicon-th-list"></span> Contratos Ativos</label>
@@ -150,15 +160,14 @@
 			  <option >N°: __  Válido até: ___ Veículo: ___</option>
 			</select>
             </div>
-            <input type="hidden" class="form-control" id="_contrato" name="operacao"  th:field="${clientes.operacao}" value="" >
+            <input type="hidden" class="form-control" id="_contrato" name="operacao"  th:field="${clientes.operacao}" >
               <button class="btn btn-block" id="update" >Editar 
                 <span class="glyphicon glyphicon-pencil"></span>
               </button>
               	
               <button type="submit" class="btn btn-block" id="delete"  >Excluir 
                 <span class="glyphicon glyphicon-trash"></span> 
-              </button>
-          </form>
+              </button>     
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal">
@@ -169,7 +178,7 @@
       </div>
     </div>
   </div> 
-  
+ </form>
    
    <!-- Modal de Pesquisa de cliente -->
   <div class="modal fade" id="myModalSearchClient" role="dialog">
