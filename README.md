@@ -49,7 +49,7 @@
 	Após clonar e importar na IDE, baixar as dependencias, você pode alterar a porta configurada p/ o server no arquivo application.propriedades 
 	<br>
 	<p>Depois só acessar:</p>
-	<pre><code>http://localhost:8280/
+	<pre><code>http://localhost:{port}/
 	</code></pre>
 		</h1>
     <h1>
