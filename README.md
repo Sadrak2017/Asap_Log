@@ -65,6 +65,7 @@
 		<li>Clientes: cadastro, exclusão (Desde que não se tenha nenhum contrato ativo), pesquisa dinâmica, edição;</li>
 		<li>Apólices: cadastro vinculado a um cliente cadastrado, recisão de contrato, reativamento de contrato rescindido, edição, pesquisa dinâmica;</li>
 		<li>Máscaras: CPF, Plava de Veículo (Para o novo modelo tambem ['AAA-9999','AAA9A99']) e valores;</li>
+		<li>Validações: CPF, confere se é válido e garante se é único na base;</li>
 		<li>Status: fim de contrato, dias faltantes para o contrato acabar e se o contrato foi reencidido ou não.</li>
 	</ul>
 	    <h1>
@@ -77,7 +78,7 @@
       Funcionalidades faltantes no sistema
     </h1>
 	<ul>
-		<li>Validação de CPF.</li>
+		<li> - </li>
 	</ul>
    </article>
   </article>
